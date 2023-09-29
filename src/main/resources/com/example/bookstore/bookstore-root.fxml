@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="708.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookstore.application.BookstoreController">
+  <tabs>
+    <Tab text="Library Management">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="813.0">
+               <children>
+                  <TableView fx:id="bookView" layoutX="22.0" layoutY="25.0" prefHeight="315.0" prefWidth="532.0" />
+                  <Button layoutX="576.0" layoutY="25.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="105.0" text="Add Button" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Transactions Management">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>
