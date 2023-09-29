@@ -1,8 +1,10 @@
 package com.example.bookstore.data;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Book {
     private int Id;
     private String title;
@@ -16,5 +18,4 @@ public class Book {
     public Book(String title) {
         this.title = title;
     }
-    public Book(){}
 }
