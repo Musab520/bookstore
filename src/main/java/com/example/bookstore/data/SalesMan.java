@@ -1,9 +1,12 @@
 package com.example.bookstore.data;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class SalesMan {
     private int id;
     private String firstName;
@@ -12,6 +15,4 @@ public class SalesMan {
     private String email;
     private Gender gender;
     private Date birthday ;
-
-    public SalesMan(){}
 }
