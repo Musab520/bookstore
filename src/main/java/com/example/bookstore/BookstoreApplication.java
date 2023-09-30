@@ -1,6 +1,5 @@
 package com.example.bookstore;
 
-import com.example.bookstore.application.BookstoreController;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Application;
@@ -9,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
-
 import java.io.IOException;
 
 public class BookstoreApplication extends Application {
