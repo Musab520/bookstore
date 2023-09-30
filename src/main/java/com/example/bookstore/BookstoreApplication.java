@@ -1,5 +1,7 @@
 package com.example.bookstore;
 
+import com.example.bookstore.data.Book;
+import com.example.bookstore.utilities.HibernateUtil;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Application;
@@ -8,12 +10,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import java.io.IOException;
 
 public class BookstoreApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        //setupFlyway(); keep commented till ready to add database
+        setupFlyway(); //keep commented till ready to add database
 
         FXMLLoader fxmlLoader = new FXMLLoader(BookstoreApplication.class.getResource("bookstore-root.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
