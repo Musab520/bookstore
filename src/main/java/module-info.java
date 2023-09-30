@@ -4,8 +4,6 @@ module com.example.bookstore {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-
-
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
@@ -19,11 +17,19 @@ module com.example.bookstore {
     requires org.hibernate.orm.core;
     requires java.persistence;
     requires java.validation;
-    exports com.example.bookstore.application;
+    requires com.google.guice;
+
     opens com.example.bookstore.application to javafx.fxml, org.flywaydb.core;
     opens com.example.bookstore to javafx.fxml;
     opens migration.flyway.bookstore;
-    opens com.example.bookstore.data to org.hibernate.orm.core;
-    exports com.example.bookstore.data;
+    opens com.example.bookstore.data.models to org.hibernate.orm.core;
+
+    exports com.example.bookstore.application;
     exports com.example.bookstore;
+    exports com.example.bookstore.data.models;
+    exports com.example.bookstore.utilities;
+    exports com.example.bookstore.data.repository;
+    exports com.example.bookstore.domain.repository;
+    exports com.example.bookstore.domain.service;
+    exports com.example.bookstore.application.service;
 }

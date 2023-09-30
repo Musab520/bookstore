@@ -1,34 +1,48 @@
 package com.example.bookstore;
 
-import com.example.bookstore.data.Book;
+import com.example.bookstore.data.repository.BookRepository;
 import com.example.bookstore.utilities.HibernateUtil;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class BookstoreApplication extends Application {
+    private static Injector injector;
     @Override
     public void start(Stage stage) throws IOException {
-        setupFlyway(); //keep commented till ready to add database
+            Parent parent = FXMLLoader.load(BookstoreApplication.class.getResource("bookstore-root.fxml"), null, null,
+                    injector::getInstance);
+            stage.setScene(new Scene(parent));
+            stage.setTitle("Access mini Stock App v1.1");
+            stage.show();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(BookstoreApplication.class.getResource("bookstore-root.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setScene(scene);
-        stage.show();
+    }
+
+    @Override
+    public void init() throws IOException {
+        setupGuice();
+        setupFlyway();
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void setupGuice() {
+        injector = Guice.createInjector(new BookstoreModule());
+        HibernateUtil hibernateUtil = injector.getInstance(HibernateUtil.class);
+        BookRepository bookRepository = injector.getInstance(BookRepository.class);
     }
 
     public static void setupFlyway() {

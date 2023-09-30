@@ -1,7 +1,7 @@
 package com.example.bookstore.utilities;
 
-import com.example.bookstore.data.Book;
-import com.example.bookstore.data.Transaction;
+import com.example.bookstore.data.models.Book;
+import com.example.bookstore.data.models.Transaction;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
