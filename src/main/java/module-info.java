@@ -20,5 +20,7 @@ module com.example.bookstore {
     exports com.example.bookstore.application;
     opens com.example.bookstore.application to javafx.fxml, org.flywaydb.core;
     opens com.example.bookstore to javafx.fxml;
+    opens migration.flyway.bookstore;
+    exports com.example.bookstore.data;
     exports com.example.bookstore;
 }

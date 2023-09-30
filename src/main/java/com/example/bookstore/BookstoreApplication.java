@@ -18,11 +18,10 @@ import java.io.IOException;
 public class BookstoreApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        setupFlyway();
+        //setupFlyway(); keep commented till ready to add database
 
         FXMLLoader fxmlLoader = new FXMLLoader(BookstoreApplication.class.getResource("bookstore-root.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }
@@ -40,8 +39,9 @@ public class BookstoreApplication extends Application {
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
         Flyway flyway = Flyway.configure()
+                .defaultSchema("bookstore")
                 .schemas("bookstore")
-                .locations("src/main/resources/migration/flyway/bookstore")
+                .locations("classpath:/migration/flyway/bookstore/")
                 .table("flyway_schema_history")
                 .baselineOnMigrate(true)
                 .baselineVersion("0")
