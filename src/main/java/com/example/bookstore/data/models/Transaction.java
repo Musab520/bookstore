@@ -1,4 +1,4 @@
-package com.example.bookstore.data;
+package com.example.bookstore.data.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor

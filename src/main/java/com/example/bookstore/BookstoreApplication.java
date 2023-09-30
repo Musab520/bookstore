@@ -1,7 +1,9 @@
 package com.example.bookstore;
 
-import com.example.bookstore.data.Book;
+import com.example.bookstore.data.repository.BookRepository;
 import com.example.bookstore.utilities.HibernateUtil;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Application;
@@ -10,16 +12,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.io.IOException;
 
 public class BookstoreApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        setupFlyway(); //keep commented till ready to add database
+        setupGuice();
+        setupFlyway();
 
         FXMLLoader fxmlLoader = new FXMLLoader(BookstoreApplication.class.getResource("bookstore-root.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -29,6 +29,12 @@ public class BookstoreApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void setupGuice() {
+        Injector injector = Guice.createInjector(new BookstoreModule());
+        HibernateUtil hibernateUtil = injector.getInstance(HibernateUtil.class);
+        BookRepository bookRepository = injector.getInstance(BookRepository.class);
     }
 
     public static void setupFlyway() {

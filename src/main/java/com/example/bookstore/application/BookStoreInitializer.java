@@ -1,6 +1,7 @@
 package com.example.bookstore.application;
 
-import com.example.bookstore.data.Book;
+import com.example.bookstore.data.models.Book;
+import com.example.bookstore.domain.service.BookService;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class BookStoreInitializer {
     public BookStoreInitializer(){}
-    public void setupBookTableView(TableView<Book> bookView) {
+    public void setupBookTableView(TableView<Book> bookView, BookService bookService) {
         List<TableColumn<Book, ?>> columns = new ArrayList<>();
         TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Book, String>, ObservableValue<String>>() {
@@ -64,7 +65,7 @@ public class BookStoreInitializer {
         bookView.getColumns().addAll(columns);
 
         ObservableList<Book> books = FXCollections.observableArrayList();
-        books.add(new Book("musab"));
+        books.addAll(bookService.list());
         bookView.setItems(books);
     }
 }
