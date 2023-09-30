@@ -14,6 +14,9 @@ module com.example.bookstore {
     requires org.flywaydb.core;
     requires com.zaxxer.hikari;
     requires static lombok;
+    requires org.hibernate.orm.core;
+    requires java.persistence;
+    requires java.validation;
     exports com.example.bookstore.application;
     opens com.example.bookstore.application to javafx.fxml, org.flywaydb.core;
     opens com.example.bookstore to javafx.fxml;
