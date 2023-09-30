@@ -1,6 +1,8 @@
 package com.example.bookstore.application;
 
+import com.example.bookstore.application.service.BookServiceImpl;
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.domain.repository.BookRepositoryImpl;
 import com.example.bookstore.domain.service.BookService;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class BookstoreController implements Initializable {
     @FXML
