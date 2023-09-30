@@ -9,6 +9,7 @@ public class Book {
     private int Id;
     private String title;
     private String author;
+    private String publisher;
     private int row;
     private String shelf;
     private double cost;
