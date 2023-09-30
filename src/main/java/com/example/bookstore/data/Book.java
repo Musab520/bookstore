@@ -2,12 +2,14 @@ package com.example.bookstore.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.UUID;
 
 
 @Data
@@ -16,8 +18,12 @@ import java.util.List;
 @Table(name = "book")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private String id;
 
     @NotEmpty
     @NotNull
@@ -41,7 +47,7 @@ public class Book {
     private int count;
 
     @ManyToMany(mappedBy = "books")
-    private List<Sale> sales;
+    private List<Transaction> sales;
 
     public Book(String title) {
         this.title = title;

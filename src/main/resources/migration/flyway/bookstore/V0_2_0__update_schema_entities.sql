@@ -1,36 +1,17 @@
 use bookstore;
--- update book table
-alter TABLE book
-    ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY,
-    Add COLUMN count INT;
 
--- Create salesman table
-CREATE TABLE salesman
+CREATE TABLE `transaction`
 (
-    id         INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(255) NOT NULL,
-    last_name  VARCHAR(255) NOT NULL,
-    phone      VARCHAR(255) UNIQUE,
-    email      VARCHAR(255) NOT NULL,
-    gender     VARCHAR(255),
-    birthday   DATE
-);
-
--- Create sale table
-CREATE TABLE sale
-(
-    id          INT PRIMARY KEY AUTO_INCREMENT,
-    salesman_id INT,
-    timestamp   TIMESTAMP,
-    FOREIGN KEY (salesman_id) REFERENCES salesman (id)
+    id VARCHAR(255) PRIMARY KEY,
+    date_purchased TIMESTAMP
 );
 
 -- Create sale_book join table for many-to-many relationship
-CREATE TABLE sale_book
+CREATE TABLE transaction_book
 (
-    sale_id INT,
-    book_id INT,
-    PRIMARY KEY (sale_id, book_id),
-    FOREIGN KEY (sale_id) REFERENCES sale (id),
+    id VARCHAR(255) PRIMARY KEY,
+    transaction_id VARCHAR(255),
+    book_id VARCHAR(255),
+    FOREIGN KEY (transaction_id) REFERENCES `transaction` (id),
     FOREIGN KEY (book_id) REFERENCES book (id)
 );

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.io.IOException;
 public class BookstoreApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        //setupFlyway(); keep commented till ready to add database
+        setupFlyway(); //keep commented till ready to add database
 
         FXMLLoader fxmlLoader = new FXMLLoader(BookstoreApplication.class.getResource("bookstore-root.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -32,8 +33,8 @@ public class BookstoreApplication extends Application {
 
     public static void setupFlyway() {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:mariadb://localhost:3306/bookstore");
-        hikariConfig.setUsername("root");
+        hikariConfig.setJdbcUrl("jdbc:mariadb://localhost:33306/bookstore");
+        hikariConfig.setUsername("admin");
         hikariConfig.setPassword("pass123");
         hikariConfig.setSchema("bookstore");
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
@@ -51,15 +52,5 @@ public class BookstoreApplication extends Application {
                 .load();
         flyway.repair();
         flyway.migrate();
-
-
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-
-        var entity = session.get(Book.class, 1);
-
-        entity.setAuthor("rayyooon");
-        session.save(entity);
-        transaction.commit();
     }
 }

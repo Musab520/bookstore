@@ -1,25 +1,25 @@
 package com.example.bookstore.utilities;
 
+import com.example.bookstore.data.Book;
+import com.example.bookstore.data.Transaction;
+import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    @Getter
+    private static SessionFactory sessionFactory;
 
-    private static SessionFactory buildSessionFactory() {
-        try {
-            Configuration configuration = new Configuration().configure();
-            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                    .applySettings(configuration.getProperties());
-            return configuration.buildSessionFactory(builder.build());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new ExceptionInInitializerError(ex);
-        }
+    static {
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml"); // You can configure additional properties here
+        configuration.addAnnotatedClass(Book.class);
+        configuration.addAnnotatedClass(Transaction.class);
+        StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties());
+
+        sessionFactory = configuration.buildSessionFactory(registryBuilder.build());
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
 }
