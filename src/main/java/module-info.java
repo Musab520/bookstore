@@ -32,4 +32,6 @@ module com.example.bookstore {
     exports com.example.bookstore.domain.repository;
     exports com.example.bookstore.domain.service;
     exports com.example.bookstore.application.service;
+    exports com.example.bookstore.application.controller;
+    opens com.example.bookstore.application.controller to javafx.fxml, org.flywaydb.core;
 }

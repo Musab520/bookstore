@@ -1,5 +1,6 @@
 package com.example.bookstore.application;
 
+import com.example.bookstore.application.component.CustomIconButtonTableCell;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.service.BookService;
 import javafx.beans.binding.Bindings;
@@ -53,6 +54,9 @@ public class BookStoreInitializer {
                 return Bindings.createDoubleBinding(() -> p.getValue().getPrice()).asObject();
             }
         });
+        TableColumn<Book, Void> customIconButtonColumn = new TableColumn<>("Actions");
+        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell());
+
 
         columns.add(titleColumn);
         columns.add(authorColumn);
@@ -60,6 +64,7 @@ public class BookStoreInitializer {
         columns.add(rowColumn);
         columns.add(shelfColumn);
         columns.add(priceColumn);
+        columns.add(customIconButtonColumn);
 
 
         bookView.getColumns().addAll(columns);

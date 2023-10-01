@@ -24,7 +24,7 @@ public class BookstoreApplication extends Application {
             Parent parent = FXMLLoader.load(BookstoreApplication.class.getResource("bookstore-root.fxml"), null, null,
                     injector::getInstance);
             stage.setScene(new Scene(parent));
-            stage.setTitle("Access mini Stock App v1.1");
+            stage.setTitle("Bookstore");
             stage.show();
 
     }

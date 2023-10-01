@@ -1,5 +1,6 @@
 package com.example.bookstore.data.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -50,5 +51,16 @@ public class Book {
 
     public Book(String title) {
         this.title = title;
+    }
+
+    public Book(String title, String author, String publisher, int row, String shelf, double cost, double price, int count) {
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.row = row;
+        this.shelf = shelf;
+        this.cost = cost;
+        this.price = price;
+        this.count = count;
     }
 }
