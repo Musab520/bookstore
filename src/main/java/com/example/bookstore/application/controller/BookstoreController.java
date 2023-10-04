@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 
@@ -40,10 +41,13 @@ public class BookstoreController implements Initializable {
     }
 
     public void openAddBookDialog() throws IOException {
-        Parent parent = FXMLLoader.load(BookstoreApplication.class.getResource("add-book-dialog.fxml"), null, null,
+        FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-book-dialog.fxml"), null, null,
                 injector::getInstance);
+        AddBookController addBookController = new AddBookController(bookService, bookView);
+        loader.setController(addBookController);
         Stage stage = new Stage();
-        stage.setScene(new Scene(parent));
-        stage.show();
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 }

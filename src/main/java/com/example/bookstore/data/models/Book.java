@@ -30,14 +30,16 @@ public class Book {
     @Size(max = 255)
     private String title;
 
+    @NotEmpty
+    @NotNull
     @Size(max = 255)
     private String author;
 
+    @NotEmpty
+    @NotNull
     @Size(max = 255)
     private String publisher;
     private int row;
-
-    @Size(max = 255)
     private String shelf;
 
     private double cost;

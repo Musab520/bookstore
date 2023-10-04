@@ -1,7 +1,5 @@
 package com.example.bookstore;
 
-import com.example.bookstore.data.repository.BookRepository;
-import com.example.bookstore.utilities.HibernateUtil;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.zaxxer.hikari.HikariConfig;
@@ -41,8 +39,6 @@ public class BookstoreApplication extends Application {
 
     public static void setupGuice() {
         injector = Guice.createInjector(new BookstoreModule());
-        HibernateUtil hibernateUtil = injector.getInstance(HibernateUtil.class);
-        BookRepository bookRepository = injector.getInstance(BookRepository.class);
     }
 
     public static void setupFlyway() {
