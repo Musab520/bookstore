@@ -8,14 +8,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class CustomIconButtonTableCell extends TableCell<Book, Void> {
-    private final Button button1;
     private final Button button2;
 
     public CustomIconButtonTableCell() {
-        button1 = createIconButton("/assets/icons/pencil.png");
         button2 = createIconButton("/assets/icons/cart-plus.png");
 
-        setGraphic(new HBox(button1, button2));
+        setGraphic(new HBox(button2));
     }
 
     private Button createIconButton(String iconName) {
@@ -39,7 +37,7 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
         if (empty) {
             setGraphic(null);
         } else {
-            setGraphic(new HBox(button1, button2));
+            setGraphic(new HBox(button2));
         }
     }
 }

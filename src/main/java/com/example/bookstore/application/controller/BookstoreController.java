@@ -37,7 +37,7 @@ public class BookstoreController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializer.setupBookTableView(bookView, bookService);
+        initializer.setupBookTableView(bookView, bookService, injector);
     }
 
     public void openAddBookDialog() throws IOException {

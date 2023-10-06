@@ -43,7 +43,7 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
-    public void delete(int id) {
+    public void delete(String id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Book book = session.get(Book.class, id);

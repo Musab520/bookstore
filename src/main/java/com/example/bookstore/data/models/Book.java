@@ -65,4 +65,16 @@ public class Book {
         this.price = price;
         this.count = count;
     }
+
+    public Book(String id, String title, String author, String publisher, int row, String shelf, double cost, double price, int count) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.row = row;
+        this.shelf = shelf;
+        this.cost = cost;
+        this.price = price;
+        this.count = count;
+    }
 }

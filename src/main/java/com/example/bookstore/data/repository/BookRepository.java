@@ -17,5 +17,5 @@ public interface BookRepository {
 
     void update(Book book);
 
-    void delete(int id);
+    void delete(String id);
 }

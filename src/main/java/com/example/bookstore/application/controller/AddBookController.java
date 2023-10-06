@@ -74,7 +74,6 @@ public class AddBookController implements Initializable {
         try {
 
         if (title.isEmpty() || author.isEmpty()) {
-            showError("All required fields must be filled.");
             throw new BookValidationException("All required fields must be filled.");
         }
 
@@ -87,11 +86,11 @@ public class AddBookController implements Initializable {
         }
 
         if(!costText.isEmpty()) {
-            cost = Integer.parseInt(costText);
+            cost = Double.parseDouble(costText);
         }
 
         if(!priceText.isEmpty()) {
-            price = Integer.parseInt(priceText);
+            price = Double.parseDouble(priceText);
         }
 
         if(!countText.isEmpty()) {
