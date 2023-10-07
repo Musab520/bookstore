@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import javax.persistence.NamedQuery;
 import java.util.List;
 
 public interface BookRepository {
@@ -18,4 +19,7 @@ public interface BookRepository {
     void update(Book book);
 
     void delete(String id);
+    List<Book> searchByTitle(String searchTerm);
+
+    List<Book> searchByAuthor(String searchTerm);
 }

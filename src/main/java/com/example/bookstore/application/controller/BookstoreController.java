@@ -2,25 +2,34 @@ package com.example.bookstore.application.controller;
 
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.BookStoreInitializer;
+import com.example.bookstore.application.component.CustomIconButtonTableCell;
 import com.example.bookstore.application.service.BookServiceImpl;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.repository.BookRepositoryImpl;
 import com.example.bookstore.domain.service.BookService;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -31,6 +40,10 @@ public class BookstoreController implements Initializable {
     @FXML
     Button addBookButton;
     BookStoreInitializer initializer = new BookStoreInitializer();
+    @FXML
+    TextField searchField;
+    @FXML
+    ChoiceBox<String> choiceBox;
 
     private final BookService bookService;
     private final Injector injector;
@@ -38,6 +51,33 @@ public class BookstoreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializer.setupBookTableView(bookView, bookService, injector);
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("TITLE");
+        list.add("AUTHOR");
+        choiceBox.setItems(FXCollections.observableList(list));
+        choiceBox.setValue("TITLE");
+
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(choiceBox.getValue().equals("TITLE")) {
+                    bookView.getItems().clear();
+                    bookView.getItems().addAll(bookService.searchByTitle(newValue));
+
+                } else if(choiceBox.getValue().equals("AUTHOR")) {
+                    bookView.getItems().clear();
+                    bookView.getItems().addAll(bookService.searchByAuthor(newValue));
+                } else if(newValue.isEmpty() || newValue.isBlank()){
+                    bookView.getItems().clear();
+                    bookView.getItems().addAll(bookService.list());
+                } else {
+                    bookView.getItems().clear();
+                    bookView.getItems().addAll(bookService.list());
+                }
+
+            }
+        });
     }
 
     public void openAddBookDialog() throws IOException {

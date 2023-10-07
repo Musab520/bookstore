@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NamedQuery;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
+@org.hibernate.annotations.NamedQueries({
+        @NamedQuery(
+                name = "searchBookByTitle",
+                query = "from Book where title LIKE CONCAT(:searchTerm, '%')"),
+        @NamedQuery(
+                name = "searchBookByAuthor",
+                query = "from Book where author LIKE CONCAT(:searchTerm, '%')")
+})
 public class Book {
     @Id
     @GeneratedValue(generator = "UUID")

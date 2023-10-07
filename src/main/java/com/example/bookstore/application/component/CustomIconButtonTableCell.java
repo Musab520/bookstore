@@ -10,8 +10,14 @@ import javafx.scene.layout.HBox;
 public class CustomIconButtonTableCell extends TableCell<Book, Void> {
     private final Button button2;
 
-    public CustomIconButtonTableCell() {
-        button2 = createIconButton("/assets/icons/cart-plus.png");
+    public CustomIconButtonTableCell(String icon) {
+        button2 = createIconButton(icon);
+
+        setGraphic(new HBox(button2));
+    }
+
+    public CustomIconButtonTableCell(String icon, Button button) {
+        button2 = createIconButton(icon);
 
         setGraphic(new HBox(button2));
     }

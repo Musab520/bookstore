@@ -68,8 +68,14 @@ public class BookStoreInitializer {
                 return Bindings.createDoubleBinding(() -> p.getValue().getPrice()).asObject();
             }
         });
+        TableColumn<Book, Integer> countColumn = new TableColumn<>("Count");
+        countColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Book, Integer>, ObservableValue<Integer>>() {
+            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Book, Integer> p) {
+                return Bindings.createIntegerBinding(() -> p.getValue().getCount()).asObject();
+            }
+        });
         TableColumn<Book, Void> customIconButtonColumn = new TableColumn<>("Actions");
-        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell());
+        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png"));
 
         bookView.setRowFactory(e -> {
             TableRow<Book> row = new TableRow<>();
@@ -99,7 +105,11 @@ public class BookStoreInitializer {
         columns.add(rowColumn);
         columns.add(shelfColumn);
         columns.add(priceColumn);
+        columns.add(countColumn);
         columns.add(customIconButtonColumn);
+        columns.forEach(e ->{
+            e.setPrefWidth(111);
+        });
 
 
         bookView.getColumns().addAll(columns);

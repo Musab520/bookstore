@@ -79,7 +79,7 @@ public class AddBookController implements Initializable {
 
         int row = 0;
         double cost = 0, price = 0;
-        int count = 0;
+        int count = 1;
 
         if(!rowText.isEmpty()) {
             row = Integer.parseInt(rowText);

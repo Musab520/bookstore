@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+
+import javax.persistence.NamedQuery;
 import java.util.List;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -51,6 +53,24 @@ public class BookRepositoryImpl implements BookRepository {
                 session.delete(book);
             }
             session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public List<Book> searchByTitle(String searchTerm) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Book> query = session.createNamedQuery("searchBookByTitle", Book.class);
+            query.setParameter("searchTerm", searchTerm);
+            return query.list();
+        }
+    }
+
+    @Override
+    public List<Book> searchByAuthor(String searchTerm) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Book> query = session.createNamedQuery("searchBookByAuthor", Book.class);
+            query.setParameter("searchTerm", searchTerm);
+            return query.list();
         }
     }
 }
