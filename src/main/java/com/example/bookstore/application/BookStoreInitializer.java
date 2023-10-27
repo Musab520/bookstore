@@ -75,7 +75,7 @@ public class BookStoreInitializer {
             }
         });
         TableColumn<Book, Void> customIconButtonColumn = new TableColumn<>("Actions");
-        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png"));
+        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png", injector));
 
         bookView.setRowFactory(e -> {
             TableRow<Book> row = new TableRow<>();
