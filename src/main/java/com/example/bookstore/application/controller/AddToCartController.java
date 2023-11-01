@@ -34,9 +34,10 @@ public class AddToCartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, book.getCount(), 1);
+        var currentCount = getCurrentCount();
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, book.getCount(), currentCount);
         quantitySpinner.setValueFactory(valueFactory);
-        priceLabel.setText(String.format("%.2f", book.getPrice()));
+        priceLabel.setText(String.format("%.2f", book.getPrice() * currentCount));
         setupListeners();
     }
 
@@ -51,32 +52,21 @@ public class AddToCartController implements Initializable {
 
         cancelButton.setOnMouseClicked(e -> stage.close());
 
-        addToCartButton.setOnMouseClicked(
-                e -> {
-                    var count = quantitySpinner.getValue();
-                    var existingCartItem = cart.getCartItem(book);
-                    if (existingCartItem == null) {
-                        cart.getCartItems().add(new CartItem(book, count));
-                    } else {
-                        int amount = count + existingCartItem.getCount();
-                        int inventoryCount = existingCartItem.getBook().getCount();
-                        if (amount > inventoryCount){
-                            existingCartItem.setCount(inventoryCount);
-                            showInformation("Number of books in this cart will be equal to the maximum amount in inventory.");
-                        }
-                        else
-                            existingCartItem.setCount(amount);
-                    }
-                    stage.close();
-                }
-        );
+        addToCartButton.setOnMouseClicked(e -> {
+            var count = quantitySpinner.getValue();
+            var existingCartItem = cart.getCartItem(book);
+            if (existingCartItem == null) {
+                cart.getCartItems().add(new CartItem(book, count));
+            } else {
+                existingCartItem.setCount(count);
+            }
+            stage.close();
+        });
     }
 
-    private void showInformation(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Not Enough Books");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    public int getCurrentCount(){
+        var existingCartItem = cart.getCartItem(book);
+        return existingCartItem == null ? 1 : existingCartItem.getCount();
     }
+
 }
