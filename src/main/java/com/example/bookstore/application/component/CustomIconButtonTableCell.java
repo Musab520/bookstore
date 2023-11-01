@@ -1,12 +1,12 @@
 package com.example.bookstore.application.component;
 
 import com.example.bookstore.BookstoreApplication;
-import com.example.bookstore.application.controller.AddBookController;
 import com.example.bookstore.application.controller.AddToCartController;
 import com.example.bookstore.data.models.Book;
 import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
@@ -59,21 +59,38 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
             button2.setOnAction(e ->{
                 try {
                     Book book = this.getTableRow().getItem();
-                    FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
-                            injector::getInstance);
-                    AddToCartController addToCartController = new AddToCartController(book);
-                    loader.setController(addToCartController);
-                    Stage stage = new Stage();
+                    if(book.getCount() < 1){
+                        showError("Out Of Stock");
+                    }
+                    else if (book.getPrice() == 0){
+                        showError("Set Book Price");
+                    }
+                    else {
+                        FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
+                                injector::getInstance);
+                        var stage = new Stage();
+                        AddToCartController addToCartController = new AddToCartController(book,stage);
+                        loader.setController(addToCartController);
 
                         stage.setScene(new Scene(loader.load()));
 
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.showAndWait();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+                    }
+
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             });
         }
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Validation Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 
