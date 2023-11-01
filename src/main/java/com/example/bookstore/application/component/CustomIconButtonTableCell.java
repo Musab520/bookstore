@@ -3,6 +3,7 @@ package com.example.bookstore.application.component;
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.controller.AddToCartController;
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.dto.Cart;
 import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class CustomIconButtonTableCell extends TableCell<Book, Void> {
     private final Button button2;
     private Injector injector;
-
+    private Cart cart;
 
     public CustomIconButtonTableCell(String icon) {
         button2 = createIconButton(icon);
@@ -28,10 +29,11 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
         setGraphic(new HBox(button2));
     }
 
-    public CustomIconButtonTableCell(String icon, Injector injector) {
+    public CustomIconButtonTableCell(String icon, Injector injector, Cart cart) {
         button2 = createIconButton(icon);
         this.injector = injector;
         setGraphic(new HBox(button2));
+        this.cart = cart;
     }
 
     private Button createIconButton(String iconName) {
@@ -69,7 +71,7 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
                         FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
                                 injector::getInstance);
                         var stage = new Stage();
-                        AddToCartController addToCartController = new AddToCartController(book,stage);
+                        AddToCartController addToCartController = new AddToCartController(book,stage, cart);
                         loader.setController(addToCartController);
 
                         stage.setScene(new Scene(loader.load()));

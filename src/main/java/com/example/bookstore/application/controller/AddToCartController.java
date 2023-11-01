@@ -1,19 +1,19 @@
 package com.example.bookstore.application.controller;
 
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.dto.Cart;
+import com.example.bookstore.dto.CartItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 @RequiredArgsConstructor()
 public class AddToCartController implements Initializable {
     private final Book book;
@@ -30,6 +30,7 @@ public class AddToCartController implements Initializable {
     private Button cancelButton;
 
     private final Stage stage;
+    private final Cart cart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,7 +40,7 @@ public class AddToCartController implements Initializable {
         setupListeners();
     }
 
-    private void setupListeners(){
+    private void setupListeners() {
         quantitySpinner.valueProperty().addListener(new ChangeListener<Integer>() {
             @Override
             public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
@@ -48,7 +49,34 @@ public class AddToCartController implements Initializable {
             }
         });
 
-        cancelButton.setOnMouseClicked(e-> stage.close());
+        cancelButton.setOnMouseClicked(e -> stage.close());
+
+        addToCartButton.setOnMouseClicked(
+                e -> {
+                    var count = quantitySpinner.getValue();
+                    var existingCartItem = cart.getCartItem(book);
+                    if (existingCartItem == null) {
+                        cart.getCartItems().add(new CartItem(book, count));
+                    } else {
+                        int amount = count + existingCartItem.getCount();
+                        int inventoryCount = existingCartItem.getBook().getCount();
+                        if (amount > inventoryCount){
+                            existingCartItem.setCount(inventoryCount);
+                            showInformation("Number of books in this cart will be equal to the maximum amount in inventory.");
+                        }
+                        else
+                            existingCartItem.setCount(amount);
+                    }
+                    stage.close();
+                }
+        );
     }
 
+    private void showInformation(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Not Enough Books");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
