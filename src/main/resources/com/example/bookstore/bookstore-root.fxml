@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="654.0" prefWidth="1064.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookstore.application.controller.BookstoreController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="744.0" prefWidth="1327.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookstore.application.controller.BookstoreController">
   <tabs>
     <Tab text="Library Management">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="905.0">
-               <children>
-                  <HBox layoutX="41.0" layoutY="14.0" prefHeight="53.0" prefWidth="498.0" spacing="10.0">
-                     <children>
-                        <TextField fx:id="searchField" prefHeight="38.0" prefWidth="322.0" promptText="Search for a Book..." />
-                     </children>
-                  </HBox>
-                  <TableView fx:id="bookView" layoutX="22.0" layoutY="71.0" prefHeight="484.0" prefWidth="894.0" />
-                  <Button fx:id="addBookButton" layoutX="929.0" layoutY="71.0" mnemonicParsing="false" onAction="#openAddBookDialog" prefHeight="61.0" prefWidth="105.0" text="Add Button" />
-                  <ChoiceBox fx:id="choiceBox" layoutX="269.0" layoutY="15.0" prefHeight="36.0" prefWidth="93.0" />
-               </children></AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="905.0" styleClass="background" stylesheets="@../../../styles/style.css">
+          <children>
+            <HBox layoutX="41.0" layoutY="14.0" prefHeight="53.0" prefWidth="498.0" spacing="10.0">
+              <children>
+                <TextField fx:id="searchField" prefHeight="38.0" prefWidth="322.0" promptText="Search for a Book..." />
+              </children>
+            </HBox>
+            <TableView fx:id="bookView" layoutX="22.0" layoutY="70.0" prefHeight="485.0" prefWidth="882.0" />
+            <ChoiceBox fx:id="choiceBox" layoutX="269.0" layoutY="15.0" prefHeight="36.0" prefWidth="93.0" />
+            <Button fx:id="addBookButton" layoutX="678.0" layoutY="2.0" mnemonicParsing="false" onAction="#openAddBookDialog" prefHeight="61.0" prefWidth="105.0" text="Add Button" />
+            <TableView fx:id="cartGrid" layoutX="969.0" layoutY="69.0" prefHeight="487.0" prefWidth="315.0" />
+            <Label layoutX="969.0" layoutY="568.0" prefHeight="32.0" prefWidth="143.0" style="-fx-background-color: white;" text="Total:" textAlignment="CENTER" />
+            <Label fx:id="totalLabel" layoutX="1149.0" layoutY="568.0" prefHeight="32.0" prefWidth="143.0" style="-fx-background-color: white;" text="Label" textAlignment="CENTER" />
+          </children>
+        </AnchorPane>
       </content>
     </Tab>
     <Tab text="Transactions Management">

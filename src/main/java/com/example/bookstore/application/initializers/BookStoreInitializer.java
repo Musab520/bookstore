@@ -1,4 +1,4 @@
-package com.example.bookstore.application;
+package com.example.bookstore.application.initializers;
 
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.component.CustomIconButtonTableCell;
@@ -31,7 +31,7 @@ public class BookStoreInitializer {
     public BookStoreInitializer(Cart cart){
         this.cart = cart;
     }
-    public void setupBookTableView(TableView<Book> bookView, BookService bookService, Injector injector) {
+    public void setupBookTableView(TableView<Book> bookView, BookService bookService, Injector injector, CartGridInitializer cartGridInitializer) {
         List<TableColumn<Book, ?>> columns = new ArrayList<>();
         TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Book, String>, ObservableValue<String>>() {
@@ -76,7 +76,7 @@ public class BookStoreInitializer {
             }
         });
         TableColumn<Book, Void> customIconButtonColumn = new TableColumn<>("Actions");
-        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png", injector, cart));
+        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png", injector, cart,cartGridInitializer));
 
         bookView.setRowFactory(e -> {
             TableRow<Book> row = new TableRow<>();

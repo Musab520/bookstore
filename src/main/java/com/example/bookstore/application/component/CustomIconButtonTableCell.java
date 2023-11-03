@@ -2,6 +2,7 @@ package com.example.bookstore.application.component;
 
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.controller.AddToCartController;
+import com.example.bookstore.application.initializers.CartGridInitializer;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.dto.Cart;
 import com.google.inject.Injector;
@@ -23,17 +24,15 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
     private Injector injector;
     private Cart cart;
 
-    public CustomIconButtonTableCell(String icon) {
-        button2 = createIconButton(icon);
+    private CartGridInitializer initializer;
 
-        setGraphic(new HBox(button2));
-    }
 
-    public CustomIconButtonTableCell(String icon, Injector injector, Cart cart) {
+    public CustomIconButtonTableCell(String icon, Injector injector, Cart cart, CartGridInitializer initializer) {
         button2 = createIconButton(icon);
         this.injector = injector;
         setGraphic(new HBox(button2));
         this.cart = cart;
+        this.initializer = initializer;
     }
 
     private Button createIconButton(String iconName) {
@@ -78,6 +77,7 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
 
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.showAndWait();
+                        initializer.init();
                     }
 
                 } catch (IOException ex) {

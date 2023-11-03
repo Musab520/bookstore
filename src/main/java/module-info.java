@@ -20,13 +20,12 @@ module com.example.bookstore {
     requires java.validation;
     requires com.google.guice;
 
-    opens com.example.bookstore.application to javafx.fxml, org.flywaydb.core;
+    opens com.example.bookstore.application.initializers to javafx.fxml, org.flywaydb.core;
     opens com.example.bookstore.application.controller to javafx.fxml, org.flywaydb.core;
     opens com.example.bookstore to javafx.fxml;
     opens migration.flyway.bookstore;
     opens com.example.bookstore.data.models to org.hibernate.orm.core;
 
-    exports com.example.bookstore.application;
     exports com.example.bookstore;
     exports com.example.bookstore.data.models;
     exports com.example.bookstore.utilities;
@@ -36,4 +35,5 @@ module com.example.bookstore {
     exports com.example.bookstore.application.service;
     exports com.example.bookstore.application.controller;
     exports com.example.bookstore.application.exceptions;
+    exports com.example.bookstore.application.initializers;
 }

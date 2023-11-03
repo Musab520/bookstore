@@ -1,10 +1,12 @@
 package com.example.bookstore.application.controller;
 
 import com.example.bookstore.BookstoreApplication;
-import com.example.bookstore.application.BookStoreInitializer;
+import com.example.bookstore.application.initializers.BookStoreInitializer;
+import com.example.bookstore.application.initializers.CartGridInitializer;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.service.BookService;
 import com.example.bookstore.dto.Cart;
+import com.example.bookstore.dto.CartItem;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import javafx.beans.value.ChangeListener;
@@ -14,10 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
@@ -35,17 +34,24 @@ public class BookstoreController implements Initializable {
     @FXML
     Button addBookButton;
     BookStoreInitializer initializer;
+    CartGridInitializer cartGridInitializer;
     @FXML
     TextField searchField;
     @FXML
     ChoiceBox<String> choiceBox;
+
+    @FXML
+    TableView<CartItem> cartGrid;
+    @FXML
+    Label totalLabel;
 
     private final BookService bookService;
     private final Injector injector;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializer = new BookStoreInitializer(cart);
-        initializer.setupBookTableView(bookView, bookService, injector);
+        cartGridInitializer = new CartGridInitializer(cartGrid,cart,totalLabel);
+        initializer.setupBookTableView(bookView, bookService, injector, cartGridInitializer);
 
         ArrayList<String> list = new ArrayList<>();
         list.add("TITLE");

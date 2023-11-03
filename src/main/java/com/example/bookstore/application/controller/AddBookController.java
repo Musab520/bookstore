@@ -1,19 +1,12 @@
 package com.example.bookstore.application.controller;
 
-import com.example.bookstore.application.BookStoreInitializer;
 import com.example.bookstore.application.exceptions.BookValidationException;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.service.BookService;
-import com.google.inject.Inject;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.stage.WindowEvent;
 import lombok.RequiredArgsConstructor;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
