@@ -2,3 +2,14 @@
 -fx-background-repeat: no-repeat;
 -fx-background-size: cover;
 }
+
+.button {
+    -fx-base: #0080ff; /* blue */
+    -fx-text-fill: #FFFFFF; /* white */
+}
+
+.rounded-label {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-padding: 10 10 10 50;
+}

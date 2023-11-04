@@ -3,6 +3,7 @@ package com.example.bookstore.application.controller;
 import com.example.bookstore.application.exceptions.BookValidationException;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.service.BookService;
+import com.example.bookstore.utilities.MessageHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -102,13 +103,13 @@ public class EditBookController implements Initializable {
             bookService.update(updatedBook);
             Stage stage = (Stage) titleField.getScene().getWindow();
             stage.close();
-            showSuccess(updatedBook.getTitle() + " successfully updated");
+            MessageHelper.showSuccess(updatedBook.getTitle() + " successfully updated", "Successfully Updated");
             bookView.getItems().clear();
             bookView.getItems().addAll(bookService.list());
         } catch (NumberFormatException e) {
-            showError("Please enter valid numeric values for 'Row', 'Cost', 'Price', and 'Count'.");
+            MessageHelper.showError("Please enter valid numeric values for 'Row', 'Cost', 'Price', and 'Count'.", "Validation Error!");
         } catch (BookValidationException e) {
-            showError(e.getMessage());
+            MessageHelper.showError(e.getMessage(), "Validation Error!");
         }
     }
 
@@ -131,21 +132,5 @@ public class EditBookController implements Initializable {
 
             }
         });
-    }
-
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validation Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showSuccess(String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Book successfully updated");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

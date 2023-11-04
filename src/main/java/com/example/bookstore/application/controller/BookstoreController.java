@@ -44,13 +44,15 @@ public class BookstoreController implements Initializable {
     TableView<CartItem> cartGrid;
     @FXML
     Label totalLabel;
+    @FXML
+    Button checkout;
 
     private final BookService bookService;
     private final Injector injector;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializer = new BookStoreInitializer(cart);
-        cartGridInitializer = new CartGridInitializer(cartGrid,cart,totalLabel);
+        cartGridInitializer = new CartGridInitializer(cartGrid,cart,totalLabel,injector);
         initializer.setupBookTableView(bookView, bookService, injector, cartGridInitializer);
 
         ArrayList<String> list = new ArrayList<>();
@@ -78,6 +80,10 @@ public class BookstoreController implements Initializable {
                 }
 
             }
+        });
+
+        checkout.setOnMouseClicked(e->{
+
         });
     }
 

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <GridPane alignment="CENTER" hgap="10" prefHeight="166.0" prefWidth="292.0" vgap="10" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -14,12 +15,17 @@
     </padding>
 
     <children>
-        <Label text="How many Books to add to cart?" GridPane.rowIndex="1" />
-        <Spinner fx:id="quantitySpinner" GridPane.rowIndex="2" />
+        <Label text="How many Books do you want?" GridPane.rowIndex="1" />
+        <Spinner fx:id="quantitySpinner" editable="true" GridPane.rowIndex="2" />
         <Label fx:id="priceLabel" text="100" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <Button fx:id="addToCartButton" text="Add to Cart" GridPane.rowIndex="4" />
-        <Button fx:id="cancelButton" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label prefHeight="8.0" prefWidth="82.0" text="Total:" GridPane.rowIndex="3" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="4">
+         <children>
+              <Button fx:id="addToCartButton" text="Add" />
+            <Button fx:id="removeFromCart" mnemonicParsing="false" text="Remove" />
+              <Button fx:id="cancelButton" text="Cancel" />
+         </children>
+      </HBox>
     </children>
    <columnConstraints>
       <ColumnConstraints />

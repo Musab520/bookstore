@@ -5,10 +5,11 @@ import com.example.bookstore.application.controller.AddToCartController;
 import com.example.bookstore.application.initializers.CartGridInitializer;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.dto.Cart;
+import com.example.bookstore.utilities.MessageHelper;
 import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
@@ -56,15 +57,18 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
         if (empty) {
             setGraphic(null);
         } else {
-            setGraphic(new HBox(button2));
+            var hbox = new HBox(button2);
+            hbox.setAlignment(Pos.CENTER);
+            setGraphic(hbox);
+
             button2.setOnAction(e ->{
                 try {
                     Book book = this.getTableRow().getItem();
                     if(book.getCount() < 1){
-                        showError("Out Of Stock");
+                        MessageHelper.showError("Out Of Stock", "Validation Error!");
                     }
                     else if (book.getPrice() == 0){
-                        showError("Set Book Price");
+                        MessageHelper.showError("Set Book Price", "Validation Error!");
                     }
                     else {
                         FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
@@ -87,12 +91,5 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
         }
     }
 
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validation Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }
 
