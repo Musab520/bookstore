@@ -4,9 +4,11 @@ import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.initializers.BookStoreInitializer;
 import com.example.bookstore.application.initializers.CartGridInitializer;
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.data.models.CartItem;
+import com.example.bookstore.data.models.Transaction;
 import com.example.bookstore.domain.service.BookService;
+import com.example.bookstore.domain.service.TransactionService;
 import com.example.bookstore.dto.Cart;
-import com.example.bookstore.dto.CartItem;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import javafx.beans.value.ChangeListener;
@@ -26,8 +28,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class BookstoreController implements Initializable {
+    private final TransactionService transactionService;
     private static Cart cart = new Cart();
     @FXML
     TableView<Book> bookView = new TableView<>();
@@ -83,7 +87,10 @@ public class BookstoreController implements Initializable {
         });
 
         checkout.setOnMouseClicked(e->{
-
+            var transaction = new Transaction();
+            transaction.setCartItems(cart.getCartItems());
+            transactionService.save(transaction);
+            this.initialize(url,resourceBundle);
         });
     }
 

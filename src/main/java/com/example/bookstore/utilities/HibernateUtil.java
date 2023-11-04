@@ -1,6 +1,7 @@
 package com.example.bookstore.utilities;
 
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.data.models.CartItem;
 import com.example.bookstore.data.models.Transaction;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
@@ -16,6 +17,7 @@ public class HibernateUtil {
         configuration.configure("hibernate.cfg.xml"); // You can configure additional properties here
         configuration.addAnnotatedClass(Book.class);
         configuration.addAnnotatedClass(Transaction.class);
+        configuration.addAnnotatedClass(CartItem.class);
         StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
 

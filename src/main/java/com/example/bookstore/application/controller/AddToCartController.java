@@ -1,8 +1,8 @@
 package com.example.bookstore.application.controller;
 
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.data.models.CartItem;
 import com.example.bookstore.dto.Cart;
-import com.example.bookstore.dto.CartItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

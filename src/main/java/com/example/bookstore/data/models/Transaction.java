@@ -23,11 +23,11 @@ public class Transaction {
 
     @ManyToMany
     @JoinTable(
-            name = "transaction_book", // Name of the join table
+            name = "transaction_cart_item", // Name of the join table
             joinColumns = @JoinColumn(name = "transaction_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
+            inverseJoinColumns = @JoinColumn(name = "cart_item_id")
     )
-    private List<Book> books;
+    private List<CartItem> cartItems;
     @Column(name = "date_purchased")
     private LocalDateTime datePurchased = LocalDateTime.now();
 }

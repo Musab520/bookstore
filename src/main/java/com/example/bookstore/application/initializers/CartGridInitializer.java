@@ -2,8 +2,8 @@ package com.example.bookstore.application.initializers;
 
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.controller.AddToCartController;
+import com.example.bookstore.data.models.CartItem;
 import com.example.bookstore.dto.Cart;
-import com.example.bookstore.dto.CartItem;
 import com.google.inject.Injector;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;

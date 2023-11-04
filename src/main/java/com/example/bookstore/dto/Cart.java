@@ -1,6 +1,7 @@
 package com.example.bookstore.dto;
 
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.data.models.CartItem;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

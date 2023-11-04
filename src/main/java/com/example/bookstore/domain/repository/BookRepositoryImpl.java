@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-import javax.persistence.NamedQuery;
 import java.util.List;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -41,6 +40,15 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.update(book);
+            session.getTransaction().commit();
+        }
+    }
+    public void update(List<Book> books) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            for (Book book : books) {
+                session.update(book);
+            }
             session.getTransaction().commit();
         }
     }
