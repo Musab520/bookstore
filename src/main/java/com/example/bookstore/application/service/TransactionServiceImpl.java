@@ -19,12 +19,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final CartItemRepository cartItemRepository;
     @Override
     public void save(Transaction transaction) {
-        cartItemRepository.save(transaction.getCartItems());
-        transactionRepository.save(transaction);
         for (var cartItem:transaction.getCartItems()) {
             var bookCount = cartItem.getBook().getCount();
             cartItem.getBook().setCount(bookCount - cartItem.getCount());
+            cartItem.setPrice(cartItem.getBook().getPrice());
         }
+        cartItemRepository.save(transaction.getCartItems());
+        transactionRepository.save(transaction);
         List<Book> books = transaction.getCartItems().stream()
                 .map(CartItem::getBook)
                 .toList();

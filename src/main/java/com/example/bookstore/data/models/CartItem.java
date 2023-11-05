@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,14 +18,15 @@ public class CartItem {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     public String id;
-    @OneToOne(targetEntity = Book.class)
+    @ManyToOne(targetEntity = Book.class)
     @JoinColumn(name = "book_id")
     public Book book;
     public double price;
     public int count;
 
-    @ManyToMany(mappedBy = "cartItems")
-    private List<Transaction> sales;
+    @JoinColumn(name = "transaction_id")
+    @ManyToOne(targetEntity = Transaction.class)
+    private Transaction transaction;
 
     public CartItem(Book book, int count) {
         this.book = book;
