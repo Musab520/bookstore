@@ -21,13 +21,8 @@ public class Transaction {
     )
     private String id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "transaction_book", // Name of the join table
-            joinColumns = @JoinColumn(name = "transaction_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private List<Book> books;
+    @OneToMany(mappedBy = "transaction")
+    private List<CartItem> cartItems;
     @Column(name = "date_purchased")
     private LocalDateTime datePurchased = LocalDateTime.now();
 }

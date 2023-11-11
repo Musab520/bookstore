@@ -1,19 +1,13 @@
 package com.example.bookstore.application.controller;
 
-import com.example.bookstore.application.BookStoreInitializer;
 import com.example.bookstore.application.exceptions.BookValidationException;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.service.BookService;
-import com.google.inject.Inject;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import com.example.bookstore.utilities.MessageHelper;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.stage.WindowEvent;
 import lombok.RequiredArgsConstructor;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -102,13 +96,13 @@ public class AddBookController implements Initializable {
         bookService.save(newBook);
         Stage stage = (Stage) titleField.getScene().getWindow();
         stage.close();
-        showSuccess(newBook.getTitle() + " successfully added");
+        MessageHelper.showSuccess(newBook.getTitle() + " successfully added", "Book Successfully Added");
         bookView.getItems().clear();
         bookView.getItems().addAll(bookService.list());
         } catch (NumberFormatException e) {
-            showError("Please enter valid numeric values for 'Row', 'Cost', 'Price', and 'Count'.");
+            MessageHelper.showError("Please enter valid numeric values for 'Row', 'Cost', 'Price', and 'Count'.", "Validation Error!");
         } catch (BookValidationException e) {
-            showError(e.getMessage());
+            MessageHelper.showError(e.getMessage(), "Validation Error!");
         }
     }
 
@@ -120,21 +114,5 @@ public class AddBookController implements Initializable {
         addButton.setOnAction(e->{
             addBook();
         });
-    }
-
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validation Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showSuccess(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Book successfully added");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

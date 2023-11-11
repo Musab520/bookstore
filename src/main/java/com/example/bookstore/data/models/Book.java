@@ -1,11 +1,9 @@
 package com.example.bookstore.data.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NamedQuery;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -58,8 +56,8 @@ public class Book {
 
     private int count;
 
-    @ManyToMany(mappedBy = "books")
-    private List<Transaction> sales;
+    @OneToMany(mappedBy = "book")
+    private List<CartItem> cartItems;
 
     public Book(String title) {
         this.title = title;

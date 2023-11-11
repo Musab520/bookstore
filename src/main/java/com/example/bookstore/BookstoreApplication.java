@@ -13,7 +13,6 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class BookstoreApplication extends Application {
     private static Injector injector;
@@ -29,8 +28,8 @@ public class BookstoreApplication extends Application {
 
     @Override
     public void init() throws IOException {
-        setupGuice();
         setupFlyway();
+        setupGuice();
     }
 
     public static void main(String[] args) {

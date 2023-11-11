@@ -1,11 +1,7 @@
 package com.example.bookstore.data.repository;
 
 import com.example.bookstore.data.models.Book;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
-import javax.persistence.NamedQuery;
 import java.util.List;
 
 public interface BookRepository {
@@ -17,6 +13,8 @@ public interface BookRepository {
     List<Book> list();
 
     void update(Book book);
+
+    void update(List<Book> books);
 
     void delete(String id);
     List<Book> searchByTitle(String searchTerm);

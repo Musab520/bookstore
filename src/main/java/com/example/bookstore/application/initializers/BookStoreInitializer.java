@@ -1,18 +1,15 @@
-package com.example.bookstore.application;
+package com.example.bookstore.application.initializers;
 
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.component.CustomIconButtonTableCell;
 import com.example.bookstore.application.controller.EditBookController;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.domain.service.BookService;
-import com.google.inject.Inject;
+import com.example.bookstore.dto.Cart;
 import com.google.inject.Injector;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,8 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookStoreInitializer {
-    public BookStoreInitializer(){}
-    public void setupBookTableView(TableView<Book> bookView, BookService bookService, Injector injector) {
+
+    private final Cart cart;
+    public BookStoreInitializer(Cart cart){
+        this.cart = cart;
+    }
+    public void setupBookTableView(TableView<Book> bookView, BookService bookService, Injector injector, CartGridInitializer cartGridInitializer) {
         List<TableColumn<Book, ?>> columns = new ArrayList<>();
         TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Book, String>, ObservableValue<String>>() {
@@ -75,7 +76,7 @@ public class BookStoreInitializer {
             }
         });
         TableColumn<Book, Void> customIconButtonColumn = new TableColumn<>("Actions");
-        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png", injector));
+        customIconButtonColumn.setCellFactory(column -> new CustomIconButtonTableCell("/assets/icons/cart-plus.png", injector, cart,cartGridInitializer));
 
         bookView.setRowFactory(e -> {
             TableRow<Book> row = new TableRow<>();

@@ -1,11 +1,14 @@
 package com.example.bookstore.application.component;
 
 import com.example.bookstore.BookstoreApplication;
-import com.example.bookstore.application.controller.AddBookController;
 import com.example.bookstore.application.controller.AddToCartController;
+import com.example.bookstore.application.initializers.CartGridInitializer;
 import com.example.bookstore.data.models.Book;
+import com.example.bookstore.dto.Cart;
+import com.example.bookstore.utilities.MessageHelper;
 import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -20,18 +23,17 @@ import java.io.IOException;
 public class CustomIconButtonTableCell extends TableCell<Book, Void> {
     private final Button button2;
     private Injector injector;
+    private Cart cart;
+
+    private CartGridInitializer initializer;
 
 
-    public CustomIconButtonTableCell(String icon) {
-        button2 = createIconButton(icon);
-
-        setGraphic(new HBox(button2));
-    }
-
-    public CustomIconButtonTableCell(String icon, Injector injector) {
+    public CustomIconButtonTableCell(String icon, Injector injector, Cart cart, CartGridInitializer initializer) {
         button2 = createIconButton(icon);
         this.injector = injector;
         setGraphic(new HBox(button2));
+        this.cart = cart;
+        this.initializer = initializer;
     }
 
     private Button createIconButton(String iconName) {
@@ -55,25 +57,39 @@ public class CustomIconButtonTableCell extends TableCell<Book, Void> {
         if (empty) {
             setGraphic(null);
         } else {
-            setGraphic(new HBox(button2));
+            var hbox = new HBox(button2);
+            hbox.setAlignment(Pos.CENTER);
+            setGraphic(hbox);
+
             button2.setOnAction(e ->{
                 try {
                     Book book = this.getTableRow().getItem();
-                    FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
-                            injector::getInstance);
-                    AddToCartController addToCartController = new AddToCartController(book);
-                    loader.setController(addToCartController);
-                    Stage stage = new Stage();
+                    if(book.getCount() < 1){
+                        MessageHelper.showError("Out Of Stock", "Validation Error!");
+                    }
+                    else if (book.getPrice() == 0){
+                        MessageHelper.showError("Set Book Price", "Validation Error!");
+                    }
+                    else {
+                        FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
+                                injector::getInstance);
+                        var stage = new Stage();
+                        AddToCartController addToCartController = new AddToCartController(book,stage, cart);
+                        loader.setController(addToCartController);
 
                         stage.setScene(new Scene(loader.load()));
 
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.showAndWait();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+                        initializer.init();
+                    }
+
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             });
         }
     }
+
 }
 
