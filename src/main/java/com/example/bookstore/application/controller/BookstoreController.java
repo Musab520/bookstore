@@ -3,12 +3,15 @@ package com.example.bookstore.application.controller;
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.initializers.BookStoreInitializer;
 import com.example.bookstore.application.initializers.CartGridInitializer;
+import com.example.bookstore.application.initializers.TransactionsTabInitializer;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.data.models.CartItem;
 import com.example.bookstore.data.models.Transaction;
 import com.example.bookstore.domain.service.BookService;
+import com.example.bookstore.domain.service.CartItemService;
 import com.example.bookstore.domain.service.TransactionService;
 import com.example.bookstore.dto.Cart;
+import com.example.bookstore.utilities.MessageHelper;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import javafx.beans.value.ChangeListener;
@@ -31,33 +34,47 @@ import java.util.ResourceBundle;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class BookstoreController implements Initializable {
-    private final TransactionService transactionService;
-    private static Cart cart = new Cart();
     @FXML
     TableView<Book> bookView = new TableView<>();
     @FXML
     Button addBookButton;
-    BookStoreInitializer initializer;
-    CartGridInitializer cartGridInitializer;
     @FXML
     TextField searchField;
     @FXML
     ChoiceBox<String> choiceBox;
-
     @FXML
     TableView<CartItem> cartGrid;
     @FXML
     Label totalLabel;
     @FXML
     Button checkout;
+    @FXML
+    DatePicker transactionDatePicker;
+    @FXML
+    Button transactionSearchButton;
+    @FXML
+    TableView<Transaction> transactionView;
+    @FXML
+    TableView<CartItem> transactionCartView;
+    @FXML
+    Label transactionTotalLabel;
 
+    private final TransactionService transactionService;
+    private final CartItemService cartItemService;
+    private static Cart cart = new Cart();
+    private BookStoreInitializer initializer;
+    private CartGridInitializer cartGridInitializer;
+    private TransactionsTabInitializer transactionsTabInitializer;
     private final BookService bookService;
     private final Injector injector;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializer = new BookStoreInitializer(cart);
-        cartGridInitializer = new CartGridInitializer(cartGrid,cart,totalLabel,injector);
+        cartGridInitializer = new CartGridInitializer(cartGrid,cart,totalLabel,injector, false);
         initializer.setupBookTableView(bookView, bookService, injector, cartGridInitializer);
+        transactionsTabInitializer = new TransactionsTabInitializer();
+        transactionsTabInitializer.init(transactionView,transactionService, transactionCartView,transactionTotalLabel,
+                transactionSearchButton, transactionDatePicker, injector);
 
         ArrayList<String> list = new ArrayList<>();
         list.add("TITLE");
@@ -87,10 +104,14 @@ public class BookstoreController implements Initializable {
         });
 
         checkout.setOnMouseClicked(e->{
-            var transaction = new Transaction();
-            transaction.setCartItems(cart.getCartItems());
-            transactionService.save(transaction);
-            this.initialize(url,resourceBundle);
+            var flag = MessageHelper.showConfirmation("Are you sure you are done with this transaction?","Confirm Transaction");
+            if (flag){
+                var transaction = new Transaction();
+                transaction.setCartItems(cart.getCartItems());
+                transactionService.save(transaction);
+                cart = new Cart();
+                this.initialize(url,resourceBundle);
+            }
         });
     }
 

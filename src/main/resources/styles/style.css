@@ -13,3 +13,9 @@
     -fx-background-radius: 10;
     -fx-padding: 10 10 10 50;
 }
+
+.clear {
+    -fx-base: #000000;
+    -fx-background-image: url("../com/example/bookstore/X.png");
+    -fx-background-size: cover;
+}

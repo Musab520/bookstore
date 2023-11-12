@@ -31,11 +31,14 @@ public class CartGridInitializer {
     private Label totalText;
     private Injector injector;
 
-    public CartGridInitializer(TableView<CartItem> grid, Cart cart, Label totalText, Injector injector) {
+    private boolean isHistory;
+
+    public CartGridInitializer(TableView<CartItem> grid, Cart cart, Label totalText, Injector injector, boolean isHistory) {
         this.grid = grid;
         this.cart = cart;
         this.totalText = totalText;
         this.injector = injector;
+        this.isHistory = isHistory;
         init();
     }
 
@@ -78,28 +81,30 @@ public class CartGridInitializer {
                 .mapToDouble(cartItem -> cartItem.getBook().getPrice() * cartItem.getCount())
                 .sum();
         totalText.setText(String.format("%.2f$", sum));
-        grid.setRowFactory(e -> {
-            TableRow<CartItem> row = new TableRow<>();
-            row.setOnMouseClicked(f -> {
-                if (!row.isEmpty() && f.getButton() == MouseButton.PRIMARY && f.getClickCount() == 2) {
-                    FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
-                            injector::getInstance);
-                    var stage = new Stage();
-                    AddToCartController addToCartController = new AddToCartController(row.getItem().getBook(),stage, cart);
-                    loader.setController(addToCartController);
+        if(!isHistory){
+            grid.setRowFactory(e -> {
+                TableRow<CartItem> row = new TableRow<>();
+                row.setOnMouseClicked(f -> {
+                    if (!row.isEmpty() && f.getButton() == MouseButton.PRIMARY && f.getClickCount() == 2) {
+                        FXMLLoader loader = new FXMLLoader(BookstoreApplication.class.getResource("add-to-cart-dialog.fxml"), null, null,
+                                injector::getInstance);
+                        var stage = new Stage();
+                        AddToCartController addToCartController = new AddToCartController(row.getItem().getBook(),stage, cart);
+                        loader.setController(addToCartController);
 
-                    try {
-                        stage.setScene(new Scene(loader.load()));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                        try {
+                            stage.setScene(new Scene(loader.load()));
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+                        this.init();
                     }
-
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.showAndWait();
-                    this.init();
-                }
+                });
+                return row;
             });
-            return row;
-        });
+        }
     }
 }
