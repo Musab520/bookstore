@@ -3,6 +3,7 @@ package com.example.bookstore.application.controller;
 import com.example.bookstore.BookstoreApplication;
 import com.example.bookstore.application.initializers.BookStoreInitializer;
 import com.example.bookstore.application.initializers.CartGridInitializer;
+import com.example.bookstore.application.initializers.ImporterInitializer;
 import com.example.bookstore.application.initializers.TransactionsTabInitializer;
 import com.example.bookstore.data.models.Book;
 import com.example.bookstore.data.models.CartItem;
@@ -58,6 +59,16 @@ public class BookstoreController implements Initializable {
     TableView<CartItem> transactionCartView;
     @FXML
     Label transactionTotalLabel;
+    @FXML
+    Button templateButton;
+    @FXML
+    Button sourceButton;
+    @FXML
+    TextField pathText;
+    @FXML
+    Button importButton;
+    @FXML
+    Button refreshButton;
 
     private final TransactionService transactionService;
     private final CartItemService cartItemService;
@@ -75,6 +86,7 @@ public class BookstoreController implements Initializable {
         transactionsTabInitializer = new TransactionsTabInitializer();
         transactionsTabInitializer.init(transactionView,transactionService, transactionCartView,transactionTotalLabel,
                 transactionSearchButton, transactionDatePicker, injector);
+        new ImporterInitializer(bookService,templateButton,sourceButton,pathText,importButton);
 
         ArrayList<String> list = new ArrayList<>();
         list.add("TITLE");
@@ -112,6 +124,10 @@ public class BookstoreController implements Initializable {
                 cart = new Cart();
                 this.initialize(url,resourceBundle);
             }
+        });
+
+        refreshButton.setOnAction(e->{
+            initializer.setupBookTableView(bookView, bookService, injector, cartGridInitializer);
         });
     }
 
