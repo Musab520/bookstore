@@ -23,6 +23,15 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
+    @Override
+    public void save(List<Book> books) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            books.forEach(e->{session.save(e);});
+            session.getTransaction().commit();
+        }
+    }
+
     public Book getById(int id) {
         try (Session session = sessionFactory.openSession()) {
             return session.get(Book.class, id);
