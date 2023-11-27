@@ -9,10 +9,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -46,7 +44,7 @@ public class ImporterInitializer {
                 MessageHelper.showError("Pick a source file first please","Source File Not Selected");
             try {
                 List<Book> books = new ArrayList<>();
-                Scanner reader = new Scanner(file);
+                Scanner reader = new Scanner(file, StandardCharsets.UTF_8.name());
                 reader.nextLine();
                 while(reader.hasNextLine())
                 {
@@ -55,7 +53,7 @@ public class ImporterInitializer {
                 if(!books.isEmpty())
                     bookService.save(books);
             } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
+                MessageHelper.showError("Failed to locate file", "File not found!");
             }
             MessageHelper.showSuccess("Successfully imported new books.", "Successful Import");
         });
@@ -162,10 +160,13 @@ public class ImporterInitializer {
                 // Content to be written to the new file
                 String fileContent = "Title (required),Author (required),Publisher,Row(number),Shelf(number),Cost,Price,Count";
 
-                try (FileWriter fileWriter = new FileWriter(new File(destinationPath))) {
+                try {
+                    // Using FileOutputStream and OutputStreamWriter with UTF-8 encoding
+                    OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(destinationPath), "UTF-8");
+
                     // Write the content to the new file
-                    fileWriter.write(fileContent);
-                    fileWriter.close();
+                    writer.write(fileContent);
+                    writer.close();
                     MessageHelper.showSuccess("File created successfully at: " + destinationPath, "Successful Creation");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -173,6 +174,7 @@ public class ImporterInitializer {
                 }
             }
         });
+
 
     }
 

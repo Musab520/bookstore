@@ -113,6 +113,7 @@ public class BookStoreInitializer {
         });
 
 
+        bookView.getColumns().clear();
         bookView.getColumns().addAll(columns);
 
         ObservableList<Book> books = FXCollections.observableArrayList();
