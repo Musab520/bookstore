@@ -62,6 +62,7 @@ public class ImporterInitializer {
     private void addLineToBooks(List<Book> books, String s) {
         var strings = s.split(",");
         var book = new Book();
+        book.setCount(1);
         if(strings.length >= 2){
             if(isNullOrEmpty(strings[0]) || isNullOrEmpty(strings[1]))
                 return;
