@@ -72,7 +72,7 @@
                <children>
                   <Pane layoutX="358.0" layoutY="131.0" prefHeight="715.0" prefWidth="1327.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TextField fx:id="pathText" layoutX="466.0" layoutY="287.0" prefHeight="23.0" prefWidth="393.0" promptText="Directory" />
+                        <TextField fx:id="pathText" editable="false" layoutX="466.0" layoutY="287.0" prefHeight="23.0" prefWidth="393.0" promptText="Directory" />
                         <Button fx:id="importButton" layoutX="590.0" layoutY="328.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="148.0" text="Bulk Import Books" />
                         <Button fx:id="templateButton" layoutX="467.0" layoutY="177.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="390.0" text="Download Template CSV File" />
                         <Button fx:id="sourceButton" layoutX="469.0" layoutY="228.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="390.0" text="Choose Source File" />
