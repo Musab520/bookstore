@@ -10,6 +10,7 @@ import com.example.bookstore.domain.service.TransactionService;
 import com.google.inject.Inject;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
@@ -19,13 +20,14 @@ public class TransactionServiceImpl implements TransactionService {
     private final CartItemRepository cartItemRepository;
     @Override
     public void save(Transaction transaction) {
+        transactionRepository.save(transaction);
         for (var cartItem:transaction.getCartItems()) {
             var bookCount = cartItem.getBook().getCount();
             cartItem.getBook().setCount(bookCount - cartItem.getCount());
             cartItem.setPrice(cartItem.getBook().getPrice());
+            cartItem.setTransaction(transaction);
         }
         cartItemRepository.save(transaction.getCartItems());
-        transactionRepository.save(transaction);
         List<Book> books = transaction.getCartItems().stream()
                 .map(CartItem::getBook)
                 .toList();
@@ -35,5 +37,15 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction getById(int id) {
         return transactionRepository.getById(id);
+    }
+
+    @Override
+    public List<Transaction> list() {
+        return transactionRepository.list();
+    }
+
+    @Override
+    public List<Transaction> listFromDate(LocalDate date){
+        return transactionRepository.listFromDate(date);
     }
 }

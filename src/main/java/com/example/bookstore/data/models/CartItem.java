@@ -25,7 +25,7 @@ public class CartItem {
     public int count;
 
     @JoinColumn(name = "transaction_id")
-    @ManyToOne(targetEntity = Transaction.class)
+    @ManyToOne(targetEntity = Transaction.class, fetch=FetchType.EAGER)
     private Transaction transaction;
 
     public CartItem(Book book, int count) {

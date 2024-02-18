@@ -21,7 +21,7 @@ public class Transaction {
     )
     private String id;
 
-    @OneToMany(mappedBy = "transaction")
+    @OneToMany(mappedBy = "transaction", fetch=FetchType.EAGER)
     private List<CartItem> cartItems;
     @Column(name = "date_purchased")
     private LocalDateTime datePurchased = LocalDateTime.now();
