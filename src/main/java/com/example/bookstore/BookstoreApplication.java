@@ -39,8 +39,8 @@ public class BookstoreApplication extends Application {
             setupFlyway();
         } catch (Exception e) {
             FLYWAY_PASS = false;
-            Platform.runLater(() -> displayAlert(Alert.AlertType.ERROR, "Error: Database connection issue.",
-                    "Please download MariaDB 10.3."));
+            Platform.runLater(() -> displayAlert(Alert.AlertType.ERROR, "Error: Database connection issue, Or Flyway Migration Error",
+                    "Please download MariaDB 10.3, or make sure migrations are correct"));
         }
         if (FLYWAY_PASS) {
             setupGuice();
